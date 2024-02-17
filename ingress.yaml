@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "http://localhost:8080"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, PUT, DELETE"
+    nginx.ingress.kubernetes.io/cors-allow-headers: "Content-Type"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+spec:
+  rules:
+    - host: app.info
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: service1-service
+                port:
+                  number: 80
+    - host: service.info
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: service2-service
+                port:
+                  number: 80
